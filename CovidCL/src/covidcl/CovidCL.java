@@ -21,7 +21,7 @@ public class CovidCL
             System.out.println("1. Ingresar cadena de ADN");
             System.out.println("2. Ingresar factor de comparación");
             System.out.println("3. Verificar mutación");
-            System.out.println("Otro: Salir");
+            System.out.println("4: Salir");
             System.out.println("\n Ingrese opción: ");
             opción=Integer.parseInt(lector.readLine());
             
@@ -62,16 +62,15 @@ public class CovidCL
                             }
                             else
                             {
-                                System.out.println("El virus no ha mutado");
+                                System.out.println("Fracaso en la operación");
                             }
                             calculado=true;
                         }
                     }
                     break;
                 default:
-                    System.out.println("Adios!");
-                   
+                    System.out.println("¡Hasta pronto!");
             } 
-        }while(opción!=5);
+        }while(opción!=4);
     }
 }
