@@ -69,15 +69,13 @@ public class ZonasConCovid
                             if(muestras[díaRegistro-1][i]==0)
                             {
                                 muestras[díaRegistro-1][i]=cantidadCasos;
-                                agregado=true;
                             }
                             else
                             {
                                 muestras[díaRegistro-1][i]=muestras[díaRegistro-1][i]+cantidadCasos+1;
-                                agregado=true;
                             }
+                            agregado=true;
                         }
-                        agregado=true;
                     }
                     break;
                 case 3:
@@ -88,62 +86,7 @@ public class ZonasConCovid
                     
                     for(int i=0; i<localidades.length; i++)
                     {
-                        int suma=0, contador=0;
-                        for(int j=0; j<muestras.length; j++)
-                        {
-                            if(muestras[j][i]>0)
-                            {
-                                suma=suma+muestras[j][i];
-                                contador++;
-                            }
-                        }
-                        if(contador>0)
-                        {
-                            promedioContagio=(double)suma/contador;
-                            
-                            if(promedioContagio<indicadorMundialContagio)
-                            {
-                                localidades[i]=null;
-                                for(int j=0; j<muestras.length; j++)
-                                {
-                                    muestras[j][i]=0;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 4:
-                    double mayorPromedio=0;
-                    boolean mayor=false;
-                    
-                    /*Búsqueda del mayor*/
-                    for(int i=0; i<localidades.length; i++)
-                    {
-                        int suma=0, contador=0;
-                        for(int j=0; j<muestras.length; j++)
-                        {
-                            if(muestras[j][i]>0)
-                            {
-                                suma=suma+muestras[j][i];
-                                contador++;
-                            }
-                        }
-                        if(contador>0)
-                        {
-                            promedioContagio=(double)suma/contador;
-                            
-                            if(mayor==false || promedioContagio>mayorPromedio)
-                            {
-                                mayor=true;
-                                mayorPromedio=promedioContagio;
-                            }
-                        }
-                    }
-                    
-                    /*Mostrar mayores*/
-                    if(mayor==true)
-                    {
-                        for(int i=0; i<localidades.length; i++)
+                        if(localidades[i]!=null)
                         {
                             int suma=0, contador=0;
                             for(int j=0; j<muestras.length; j++)
@@ -157,9 +100,75 @@ public class ZonasConCovid
                             if(contador>0)
                             {
                                 promedioContagio=(double)suma/contador;
-                                if(Math.abs(promedioContagio-mayorPromedio)>0.0000001)
+
+                                if(promedioContagio<indicadorMundialContagio)
                                 {
-                                    System.out.println(localidades[i]);
+                                    localidades[i]=null;
+                                    for(int j=0; j<muestras.length; j++)
+                                    {
+                                        muestras[j][i]=0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    double mayorPromedio;
+                    boolean mayor=false;
+                    
+                    /*Calcula promedio y búsqueda del mayor*/
+                    for(int i=0; i<localidades.length; i++)
+                    {
+                        if(localidades[i]!=null)
+                        {
+                            int suma=0, contador=0;
+                            for(int j=0; j<muestras.length; j++)
+                            {
+                                if(muestras[j][i]>0)
+                                {
+                                    suma=suma+muestras[j][i];
+                                    contador++;
+                                }
+                            }
+                            if(contador>0)
+                            {
+                                promedioContagio=(double)suma/contador;
+
+                                /*Determina del mayor*/
+                                if(mayor==false || promedioContagio>mayorPromedio)
+                                {
+                                    mayor=true;
+                                    mayorPromedio=promedioContagio;
+                                }
+                            }
+                        }
+                    }
+                    
+                    /*Mostrar mayores*/
+                    if(mayor==true)
+                    {
+                        for(int i=0; i<localidades.length; i++)
+                        {
+                            if(localidades[i]!=null)
+                            {
+                                int suma=0, contador=0;
+                                for(int j=0; j<muestras.length; j++)
+                                {
+                                    if(muestras[j][i]>0)
+                                    {
+                                        suma=suma+muestras[j][i];
+                                        contador++;
+                                    }
+                                }
+                                if(contador>0)
+                                {
+                                    promedioContagio=(double)suma/contador;
+                                    
+                                    if(Math.abs(promedioContagio-mayorPromedio)>0.0000001)
+                                    {
+                                        System.out.println(localidades[i]);
+                                    }
                                 }
                             }
                         }
